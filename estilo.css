@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+
+/*configurações gerais*/
+:root {
+  --mainWhite: #fff;
+  --mainBlack: #222;
+  --mainGrey: #ececec;
+  --mainTransition: all 0.3s linear;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  color: var(--mainBlack);
+  background: var(--mainWhite);
+  font-family: "Lato", sans-serif;
+}
+
+/*barra de navegação*/
+
+.navbar {
+  background: rgb(231, 226, 221);
+}
+
+.size-icon {
+  font-size: 25px;
+}
