@@ -17,13 +17,71 @@ body {
   background: var(--mainWhite);
   font-family: "Lato", sans-serif;
 }
+html,
+body,
+header {
+  height: 100%;
+}
+
+.banner {
+  height: 80%;
+}
+
+/*cabeçalho*/
+header {
+  background: url("images/wallpaper.jpg");
+  background-position: center;
+}
 
 /*barra de navegação*/
-
 .navbar {
-  background: rgb(231, 226, 221);
+  /*background: rgb(231, 226, 221);*/
+
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .size-icon {
   font-size: 25px;
+  cursor: pointer;
+}
+
+/*caixa*/
+
+.caixa {
+  color: white;
+  height: 35%;
+  width: 35%;
+  background-color: rgba(0, 0, 0, 0.6);
+  margin-top: 30px;
+}
+
+.titulo-caixa {
+  margin-top: 35px;
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.botao-caixa {
+  margin-top: 30px;
+  padding: 15px;
+  background: none;
+  color: white;
+  transition: var(--mainTransition);
+}
+
+.botao-caixa:hover {
+  background: white;
+  color: black;
+}
+
+/*seção de produtos*/
+
+.principal {
+  margin: 45px 0px;
+}
+.titulo-produtos {
+  margin-bottom: 60px;
+}
+.titulo-produtos h1 {
+  font-weight: 850;
 }
