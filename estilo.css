@@ -14,7 +14,7 @@
   box-sizing: border-box;
 }
 body {
-  color: var(--mainBlack);
+  color: var(--mainWhite);
   background: var(--mainWhite);
   font-family: "Lato", sans-serif;
 }
@@ -50,11 +50,13 @@ header {
 
 .caixa {
   color: white;
-  height: 35%;
-  width: 35%;
   background-color: rgba(0, 0, 0, 0.6);
   margin-top: 30px;
+   height: 35%;
+   width: 70%;
 }
+
+
 
 .titulo-caixa {
   margin-top: 35px;
@@ -68,13 +70,54 @@ header {
   background: none;
   color: white;
   border-radius: 20px;
-  width: 30%;
+  width: 35%;
   transition: var(--mainTransition);
 }
 
 .botao-caixa:hover {
   background: white;
   color: black;
+}
+
+@media (max-width: 575.98px) { 
+    .caixa{
+        height: 38%;
+    }
+    .titulo-caixa {
+        margin-top: 20px;
+        font-size:30px;
+        font-weight: 900;
+    }
+    .botao-caixa {
+        margin-top: 10px;
+        
+    }
+
+ }
+
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    .titulo-caixa {
+        margin-top: 20px;
+        font-size: 30px;
+        font-weight: 900;
+    }
+    .botao-caixa {
+        margin-top: 10px;
+    }
+    .icon-margin{
+        margin: 0;
+    }
+ }
+
+@media (min-width: 1200px) { 
+    .caixa{
+        height: 35%;
+         width: 45%;
+    }
+    .icon-margin{
+        margin-left: 0;
+    }
 }
 
 /*seção de produtos*/
@@ -142,3 +185,55 @@ header {
 }
 
 
+
+/*Footer*/
+
+footer{
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+}
+
+.icon-margin{
+    margin-left: 10px;
+}
+
+
+    @media (max-width: 575.98px) { 
+    .caixa{
+        height: 38%;
+    }
+    .titulo-caixa {
+        margin-top: 20px;
+        font-size:30px;
+        font-weight: 900;
+    }
+    .botao-caixa {
+        margin-top: 10px;
+        
+    }
+    .icon-margin{
+        margin-left: 0;
+
+ }
+
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    .titulo-caixa {
+        margin-top: 20px;
+        font-size: 30px;
+        font-weight: 900;
+    }
+    .botao-caixa {
+        margin-top: 10px;
+    }
+
+ }
+
+@media (min-width: 1200px) { 
+    .caixa{
+        height: 35%;
+         width: 45%;
+    }
+    
+    }
+}
