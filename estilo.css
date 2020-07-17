@@ -2,6 +2,7 @@
 
 /*configurações gerais*/
 
+
 :root {
   --mainWhite: #fff;
   --mainBlack: #222;
@@ -137,6 +138,7 @@ header {
 .borda:hover {
   cursor: pointer;
   border: 1px ridge #e6e6e6;
+  
 }
 
 
@@ -175,11 +177,11 @@ footer{
     background: rgb(240, 157, 81, 0.5);
     z-index: 2;
     visibility: hidden;
-    /*
-    margin: 10px;
-    padding: 10px;
-    */
     padding: 15px;
+}
+
+.showcart{
+  visibility: visible;
 }
 
 .carrinho{
@@ -192,16 +194,29 @@ footer{
   z-index: 3;
   background: rgb(231, 226, 221);
   padding: 1.5rem;
-  /*transition: var(--mainTransition);*/
+  transform: translateX(100%);
+  transition: var(--mainTransition);
   /*transform: translateX(100%);*/
 }
 
+.aparecerCarrinho{
+  transform: translateX(0);
+}
+/*
 .conteudo-carrinho h3{
    font-size: 25px;
    font-weight:550;
    text-transform: capitalize;
    letter-spacing: var(--mainSpacing);
 }
+*/
+.tituloCarrinho{
+   font-size: 25px;
+   font-weight:550;
+   text-transform: capitalize;
+   letter-spacing: var(--mainSpacing);
+}
+
 .item-carrinho{
     margin-top: 20px;
 }
@@ -232,11 +247,6 @@ footer{
 .limpar-carrinho{
     padding: 5px 18px;
 }
-
-
-
-
-
 
 
 
