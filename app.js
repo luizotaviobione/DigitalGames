@@ -61,7 +61,8 @@ class Produtos {
             />
             <button class="botao-item"  id="${i}">
               <i class="fas fa-shopping-cart"></i>
-              Add to Cart
+              Add no Carrinho
+              
             </button>
           </div>
 
@@ -82,19 +83,32 @@ class Produtos {
 
   clicarnoProduto() {
     const itens = document.querySelectorAll(".borda");
+    var botaoitem = document.querySelectorAll(".botao-item");
+    console.log(botaoitem);
 
     //abrir o carrinho
     itens.forEach((produto) => {
+      var z = true;
       //produto.addEventListener("click", this.adicionarProduto);
       produto.addEventListener("click", (e) => {
-        // "";
         var click = e.target;
         var jogo = arrayJogos[click.id];
-        produtosCarrinho.push(jogo);
-
-        this.aparecerCarrinho();
-        this.updatevalores();
-        this.adicionarProCarrinho(jogo, click.id);
+        jogo.id = click.id;
+        //console.log(botaoitem[click.id]);
+        var textobotao = botaoitem[click.id];
+        textobotao.innerHTML = `<i class="fas fa-shopping-cart"></i> No Carrinho <i class="fa fa-check"></i>`;
+        produtosCarrinho.forEach((produtocarrinho) => {
+          if (jogo.id === produtocarrinho.id) {
+            alert("produto ja está no carrinho");
+            z = false;
+          }
+        });
+        if (z === true) {
+          produtosCarrinho.push(jogo);
+          this.aparecerCarrinho();
+          this.updatevalores();
+          this.adicionarProCarrinho(jogo, click.id);
+        }
       });
     });
   }
@@ -107,7 +121,7 @@ class Produtos {
     //console.log(precoTotal.innerText);
     preco = parseFloat(preco);
     precoTotal.innerText = preco.toFixed(2);
-    console.log(precoTotal.innerHTML);
+    //console.log(precoTotal.innerHTML);
   }
 
   adicionarProCarrinho(jogo, id) {
@@ -121,7 +135,7 @@ class Produtos {
             <div class="info-item">
               <h4 class="">${jogo.nome}</h4>
               <h4 align="left" class="mt-4 mb-4">${jogo.preco}R$</h4>
-              <span class="remove-item" data-id=${id}>Remove</span>
+              <span class="remove-item" id=${id}>Remove</span>
             </div>
 
             <div class="ml-auto pr-3 pt-4">
@@ -132,10 +146,27 @@ class Produtos {
           </div>`;
 
     elementosCarrinho.innerHTML += elemento;
-    var botaoRemoverItem = document.querySelectorAll(".remove-item");
 
+    /*remover produtos do carrinho*/
+    var botaoRemoverItem = document.querySelectorAll(".remove-item");
+    var botaoitem = document.querySelectorAll(".botao-item");
     botaoRemoverItem.forEach((botao) => {
-      botao.addEventListener("click", () => {});
+      botao.addEventListener("click", (e) => {
+        var id = e.target.id;
+        var div = e.target.parentNode.parentNode;
+        var i = 0;
+
+        produtosCarrinho.forEach((produtos) => {
+          if (id === produtos.id) {
+            produtosCarrinho.splice(i, 1);
+          }
+          i++;
+        });
+        var textobotao = botaoitem[id];
+        textobotao.innerHTML = `<i class="fas fa-shopping-cart"></i> Add No Carrinho`;
+        div.remove();
+        this.updatevalores();
+      });
     });
   }
 

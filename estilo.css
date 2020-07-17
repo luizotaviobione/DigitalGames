@@ -144,7 +144,7 @@ header {
 
 .borda:hover .botao-item {
     display: inline;
-    transform: translateX(-30%);
+    transform: translateX(-23%);
 }
 
 
