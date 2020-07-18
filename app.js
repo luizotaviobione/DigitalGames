@@ -6,6 +6,7 @@ fecharJanelaCarrinho = document.querySelector(".botao-carrinho");
 elementosCarrinho = document.querySelector(".conteudo-carrinho");
 botaoCarrinho = document.querySelector(".carrinho-nav");
 precoTotal = document.querySelector(".preco-total");
+limparCarrinho = document.querySelector(".limpar-carrinho");
 
 var produtosCarrinho = [];
 
@@ -78,13 +79,30 @@ class Produtos {
   clicarCarrinho() {
     botaoCarrinho.addEventListener("click", () => {
       this.aparecerCarrinho();
+      console.log(this);
+    });
+
+    //limpar todos os itens
+    limparCarrinho.addEventListener("click", () => {
+      var itens = document.querySelectorAll(".item-carrinho");
+
+      itens.forEach((item) => {
+        item.remove();
+      });
+
+      /*exclui todos elementos do array*/
+      while (produtosCarrinho.length) {
+        produtosCarrinho.pop();
+      }
+
+      this.updatevalores();
     });
   }
 
   clicarnoProduto() {
     const itens = document.querySelectorAll(".borda");
     var botaoitem = document.querySelectorAll(".botao-item");
-    console.log(botaoitem);
+    //console.log(botaoitem);
 
     //abrir o carrinho
     itens.forEach((produto) => {
@@ -94,6 +112,7 @@ class Produtos {
         var click = e.target;
         var jogo = arrayJogos[click.id];
         jogo.id = click.id;
+        jogo.amount = 1;
         //console.log(botaoitem[click.id]);
         var textobotao = botaoitem[click.id];
         textobotao.innerHTML = `<i class="fas fa-shopping-cart"></i> No Carrinho <i class="fa fa-check"></i>`;
@@ -116,12 +135,13 @@ class Produtos {
   updatevalores() {
     let preco = 0;
     produtosCarrinho.map((produto) => {
-      preco += produto.preco;
+      preco += produto.preco * produto.amount;
     });
     //console.log(precoTotal.innerText);
     preco = parseFloat(preco);
     precoTotal.innerText = preco.toFixed(2);
     //console.log(precoTotal.innerHTML);
+    console.log(produtosCarrinho);
   }
 
   adicionarProCarrinho(jogo, id) {
@@ -138,9 +158,9 @@ class Produtos {
               <span class="remove-item" id=${id}>Remove</span>
             </div>
 
-            <div class="ml-auto pr-3 pt-4">
-              <i class="fas fa-chevron-up"></i>
-              <p class="pt-2">1</p>
+            <div class="ml-auto pr-3 pt-4 qtdelemento" id=${id}>
+              <i class="fas fa-chevron-up" ></i>
+              <p class="pt-2 number">1</p>
               <i class="fas fa-chevron-down"></i>
             </div>
           </div>`;
@@ -150,6 +170,7 @@ class Produtos {
     /*remover produtos do carrinho*/
     var botaoRemoverItem = document.querySelectorAll(".remove-item");
     var botaoitem = document.querySelectorAll(".botao-item");
+
     botaoRemoverItem.forEach((botao) => {
       botao.addEventListener("click", (e) => {
         var id = e.target.id;
@@ -165,6 +186,44 @@ class Produtos {
         var textobotao = botaoitem[id];
         textobotao.innerHTML = `<i class="fas fa-shopping-cart"></i> Add No Carrinho`;
         div.remove();
+        this.updatevalores();
+      });
+    });
+    /*fim remoção produtos*/
+
+    var qtdelemento = document.querySelectorAll(".qtdelemento");
+
+    qtdelemento.forEach((qtd) => {
+      qtd.addEventListener("click", (e) => {
+        var click = e.target;
+        if (click.classList.contains("fa-chevron-down")) {
+          //console.log(click.previousElementSibling);
+          var number = click.previousElementSibling;
+          number.innerText = parseInt(number.innerText) - 1;
+          if (parseInt(number.innerText) === 0) {
+            var removerProduto = number.parentNode.parentNode;
+            removerProduto.remove();
+
+            console.log();
+          }
+
+          /*criar funcao para reduzir codigo depois*/
+          produtosCarrinho.forEach((jogo) => {
+            if (jogo.id === id) {
+              jogo.amount = parseInt(number.innerText);
+            }
+          });
+        } else if (click.classList.contains("fa-chevron-up")) {
+          var number = click.nextElementSibling;
+          number.innerText = parseInt(number.innerText) + 1;
+          /*criar funcao para reduzir codigo depois*/
+          produtosCarrinho.forEach((jogo) => {
+            if (jogo.id === id) {
+              jogo.amount = parseInt(number.innerText);
+            }
+          });
+        }
+
         this.updatevalores();
       });
     });
