@@ -85,9 +85,16 @@ class Produtos {
     //limpar todos os itens
     limparCarrinho.addEventListener("click", () => {
       var itens = document.querySelectorAll(".item-carrinho");
-
+      let botaoitem = document.querySelectorAll(".botao-item");
+      console.log(itens);
+      /*excluir elementos da div*/
       itens.forEach((item) => {
         item.remove();
+        var childrenId = item.children[2].id;
+        console.log(botaoitem[childrenId]);
+        botaoitem[
+          childrenId
+        ].innerHTML = `<i class="fas fa-shopping-cart"></i>Add no Carrinho`;
       });
 
       /*exclui todos elementos do array*/
@@ -106,9 +113,9 @@ class Produtos {
 
     //abrir o carrinho
     itens.forEach((produto) => {
-      var z = true;
       //produto.addEventListener("click", this.adicionarProduto);
       produto.addEventListener("click", (e) => {
+        var z = true;
         var click = e.target;
         var jogo = arrayJogos[click.id];
         jogo.id = click.id;
@@ -118,7 +125,11 @@ class Produtos {
         textobotao.innerHTML = `<i class="fas fa-shopping-cart"></i> No Carrinho <i class="fa fa-check"></i>`;
         produtosCarrinho.forEach((produtocarrinho) => {
           if (jogo.id === produtocarrinho.id) {
-            alert("produto ja está no carrinho");
+            swal(
+              "Aviso",
+              "Este produto ja foi adicionado ao carrinho",
+              "warning"
+            );
             z = false;
           }
         });
@@ -128,6 +139,8 @@ class Produtos {
           this.updatevalores();
           this.adicionarProCarrinho(jogo, click.id);
         }
+
+        console.log(z);
       });
     });
   }
@@ -141,7 +154,7 @@ class Produtos {
     preco = parseFloat(preco);
     precoTotal.innerText = preco.toFixed(2);
     //console.log(precoTotal.innerHTML);
-    console.log(produtosCarrinho);
+    ///console.log(produtosCarrinho);
   }
 
   adicionarProCarrinho(jogo, id) {
@@ -195,35 +208,24 @@ class Produtos {
 
     qtdelemento.forEach((qtd) => {
       qtd.addEventListener("click", (e) => {
-        var click = e.target;
+        let click = e.target;
+        var idAmount = click.parentNode.id;
+        console.log(idAmount);
         if (click.classList.contains("fa-chevron-down")) {
-          //console.log(click.previousElementSibling);
           var number = click.previousElementSibling;
           number.innerText = parseInt(number.innerText) - 1;
           if (parseInt(number.innerText) === 0) {
+            console.log("entrei aqui");
             var removerProduto = number.parentNode.parentNode;
             removerProduto.remove();
-
-            console.log();
+            var texto = botaoitem[idAmount];
+            texto.innerHTML = `<i class="fas fa-shopping-cart"></i> Add No Carrinho`;
           }
-
-          /*criar funcao para reduzir codigo depois*/
-          produtosCarrinho.forEach((jogo) => {
-            if (jogo.id === id) {
-              jogo.amount = parseInt(number.innerText);
-            }
-          });
         } else if (click.classList.contains("fa-chevron-up")) {
           var number = click.nextElementSibling;
           number.innerText = parseInt(number.innerText) + 1;
-          /*criar funcao para reduzir codigo depois*/
-          produtosCarrinho.forEach((jogo) => {
-            if (jogo.id === id) {
-              jogo.amount = parseInt(number.innerText);
-            }
-          });
         }
-
+        this.amountVetor(number, idAmount);
         this.updatevalores();
       });
     });
@@ -239,6 +241,23 @@ class Produtos {
       carrinho.classList.remove("aparecerCarrinho");
       //console.log(precoTotal.innerText);
     });
+  }
+
+  amountVetor(number, id) {
+    console.log(number);
+    let k = 0;
+    console.log(id);
+    produtosCarrinho.forEach((jogo) => {
+      if (jogo.id === id) {
+        if (parseInt(number.innerText) != 0) {
+          jogo.amount = parseInt(number.innerText);
+        } else {
+          produtosCarrinho.splice(k, 1);
+        }
+      }
+      k++;
+    });
+    console.log(produtosCarrinho);
   }
 }
 
