@@ -44,6 +44,27 @@ const arrayJogos = [
 ];
 
 class Produtos {
+  scroll() {
+    var botaoCompre = document.querySelector(".botao-caixa");
+    var cartLink = document.querySelector(".cartLink");
+
+    botaoCompre.addEventListener("click", (e) => {
+      e.preventDefault();
+      var id = e.target.getAttribute("href");
+      var secao = document.querySelector(id);
+      //console.log(id);
+      console.log(botaoCompre.offsetTop);
+      console.log(secao.offsetTop);
+
+      window.scroll({
+        top: secao.offsetTop,
+        behavior: "smooth",
+      });
+    });
+
+    //cartLink.addEventListener("click", this.aparecerCarrinho);
+  }
+
   mostrarProdutos() {
     var i = 0;
     var adicionando = "";
@@ -264,6 +285,7 @@ class Produtos {
 document.addEventListener("DOMContentLoaded", () => {
   const produtos = new Produtos();
 
+  produtos.scroll();
   produtos.mostrarProdutos();
   produtos.clicarnoProduto();
   produtos.clicarCarrinho();

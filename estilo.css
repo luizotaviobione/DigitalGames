@@ -73,11 +73,17 @@ header {
   border-radius: 20px;
   width: 30%;
   transition: var(--mainTransition);
+  
 }
+  .botao-caixa:focus{
+    outline: none;
+  }
+
 
 .botao-caixa:hover {
   background: white;
   color: black;
+
 }
 
 
