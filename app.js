@@ -7,6 +7,7 @@ elementosCarrinho = document.querySelector(".conteudo-carrinho");
 botaoCarrinho = document.querySelector(".carrinho-nav");
 precoTotal = document.querySelector(".preco-total");
 limparCarrinho = document.querySelector(".limpar-carrinho");
+botaoCompraelimpar = document.querySelector(".botoes-limpcomp");
 
 var produtosCarrinho = [];
 
@@ -44,6 +45,27 @@ const arrayJogos = [
 ];
 
 class Produtos {
+  inicializarCarrinho() {
+    var produto = document.querySelectorAll(".borda");
+    var carrinho = Storage.getCart();
+
+    carrinho.forEach((jogo) => {
+      this.adicionarProCarrinho(jogo, jogo.id);
+      produto.forEach((produto) => {
+        if (jogo.id === produto.id) {
+          console.log(produto.children[0].children[1]);
+          produto.children[0].children[1].innerHTML = `<i class="fas fa-shopping-cart"></i> No Carrinho <i class="fa fa-check"></i>`;
+        }
+      });
+    });
+    produtosCarrinho = carrinho;
+    this.updatevalores();
+  }
+  atualizarCarrinho() {
+    Storage.saveCart(produtosCarrinho);
+    this.updatevalores();
+  }
+
   scroll() {
     var botaoCompre = document.querySelector(".botao-caixa");
     var cartLink = document.querySelector(".cartLink");
@@ -88,8 +110,8 @@ class Produtos {
             </button>
           </div>
 
-          <h4 class="formatoh4">${jogo.nome}</h4>
-          <span class="priceitem">${jogo.preco}R$</span>
+          <h4 class="formatoh4" id="${i}">${jogo.nome}</h4>
+          <span class="priceitem" id="${i}">${jogo.preco}R$</span>
       </div>`;
       i++;
     });
@@ -100,15 +122,16 @@ class Produtos {
   clicarCarrinho() {
     botaoCarrinho.addEventListener("click", () => {
       this.aparecerCarrinho();
-      console.log(this);
+      //console.log(this);
     });
 
     //limpar todos os itens
+    /*
     limparCarrinho.addEventListener("click", () => {
       var itens = document.querySelectorAll(".item-carrinho");
       let botaoitem = document.querySelectorAll(".botao-item");
       console.log(itens);
-      /*excluir elementos da div*/
+      
       itens.forEach((item) => {
         item.remove();
         var childrenId = item.children[2].id;
@@ -118,12 +141,55 @@ class Produtos {
         ].innerHTML = `<i class="fas fa-shopping-cart"></i>Add no Carrinho`;
       });
 
-      /*exclui todos elementos do array*/
+      
       while (produtosCarrinho.length) {
         produtosCarrinho.pop();
       }
 
       this.updatevalores();
+      this.atualizarCarrinho();
+    });
+    */
+
+    botaoCompraelimpar.addEventListener("click", (e) => {
+      if (e.target.classList.contains("botao-geral")) {
+        var itens = document.querySelectorAll(".item-carrinho");
+        let botaoitem = document.querySelectorAll(".botao-item");
+        console.log(itens);
+        if (e.target.classList.contains("comprar-carrinho")) {
+          if (produtosCarrinho.length != 0)
+            swal("Aviso", "Compra Efetuada com Sucesso", "success");
+          else {
+            swal("Aviso", "Carrinho Vazio, Compra não efetuada", "warning");
+          }
+        } else if (e.target.classList.contains("limpar-carrinho")) {
+          if (produtosCarrinho.length != 0) {
+            swal("Aviso", "Os itens do carrinho foram removidos", "info");
+          } else {
+            swal(
+              "Aviso",
+              "Carrinho vazio não há itens para retirar",
+              "warning"
+            );
+          }
+        }
+
+        itens.forEach((item) => {
+          item.remove();
+          var childrenId = item.children[2].id;
+          console.log(botaoitem[childrenId]);
+          botaoitem[
+            childrenId
+          ].innerHTML = `<i class="fas fa-shopping-cart"></i>Add no Carrinho`;
+        });
+
+        while (produtosCarrinho.length) {
+          produtosCarrinho.pop();
+        }
+
+        this.updatevalores();
+        this.atualizarCarrinho();
+      }
     });
   }
 
@@ -160,8 +226,9 @@ class Produtos {
           this.updatevalores();
           this.adicionarProCarrinho(jogo, click.id);
         }
-
+        //console.log(produtosCarrinho);
         console.log(z);
+        this.atualizarCarrinho();
       });
     });
   }
@@ -180,6 +247,7 @@ class Produtos {
 
   adicionarProCarrinho(jogo, id) {
     var elemento = "";
+    //console.log(jogo.amount);
     elemento = `
           <div class="item-carrinho d-flex">
             <div class="img-item-carrinho">
@@ -192,7 +260,7 @@ class Produtos {
               <span class="remove-item" id=${id}>Remove</span>
             </div>
 
-            <div class="ml-auto pr-3 pt-4 qtdelemento" id=${id}>
+            <div class="ml-auto pr-3 pt-4 qtdelemento" id=${id} amount=${jogo.amount}>
               <i class="fas fa-chevron-up" ></i>
               <p class="pt-2 number">1</p>
               <i class="fas fa-chevron-down"></i>
@@ -221,6 +289,7 @@ class Produtos {
         textobotao.innerHTML = `<i class="fas fa-shopping-cart"></i> Add No Carrinho`;
         div.remove();
         this.updatevalores();
+        this.atualizarCarrinho();
       });
     });
     /*fim remoção produtos*/
@@ -228,6 +297,14 @@ class Produtos {
     var qtdelemento = document.querySelectorAll(".qtdelemento");
 
     qtdelemento.forEach((qtd) => {
+      if (qtd.id === jogo.id) {
+        var amount = qtd.getAttribute("amount");
+        var texto = qtd.children[1];
+
+        texto.innerText = amount;
+        //variavel.innerText =
+      }
+
       qtd.addEventListener("click", (e) => {
         let click = e.target;
         var idAmount = click.parentNode.id;
@@ -235,6 +312,7 @@ class Produtos {
         if (click.classList.contains("fa-chevron-down")) {
           var number = click.previousElementSibling;
           number.innerText = parseInt(number.innerText) - 1;
+
           if (parseInt(number.innerText) === 0) {
             console.log("entrei aqui");
             var removerProduto = number.parentNode.parentNode;
@@ -247,6 +325,7 @@ class Produtos {
           number.innerText = parseInt(number.innerText) + 1;
         }
         this.amountVetor(number, idAmount);
+        this.atualizarCarrinho();
         this.updatevalores();
       });
     });
@@ -279,6 +358,18 @@ class Produtos {
       k++;
     });
     console.log(produtosCarrinho);
+    this.atualizarCarrinho();
+  }
+}
+
+class Storage {
+  static saveCart(carrinho) {
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  }
+  static getCart() {
+    return localStorage.getItem("carrinho")
+      ? JSON.parse(localStorage.getItem("carrinho"))
+      : [];
   }
 }
 
@@ -289,4 +380,5 @@ document.addEventListener("DOMContentLoaded", () => {
   produtos.mostrarProdutos();
   produtos.clicarnoProduto();
   produtos.clicarCarrinho();
+  produtos.inicializarCarrinho();
 });
