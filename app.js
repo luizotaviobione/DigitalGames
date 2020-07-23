@@ -70,6 +70,8 @@ class Produtos {
     var botaoCompre = document.querySelector(".botao-caixa");
     var cartLink = document.querySelector(".cartLink");
 
+    var barraNavegação = document.querySelector(".barra-navegacao");
+
     botaoCompre.addEventListener("click", (e) => {
       e.preventDefault();
       var id = e.target.getAttribute("href");
@@ -82,6 +84,24 @@ class Produtos {
         top: secao.offsetTop,
         behavior: "smooth",
       });
+    });
+
+    barraNavegação.addEventListener("click", (e) => {
+      e.preventDefault();
+      var id = e.target.getAttribute("href");
+      console.log(id);
+      if (id === "#comprar" || id === "#sobrenos") {
+        var secao = document.querySelector(id);
+        console.log(secao);
+        window.scroll({
+          top: secao.offsetTop,
+          behavior: "smooth",
+        });
+      } else if (id === "#carrinho") {
+        this.aparecerCarrinho();
+      }
+
+      //var secao = document.querySelector(id)
     });
 
     //cartLink.addEventListener("click", this.aparecerCarrinho);
@@ -376,9 +396,9 @@ class Storage {
 document.addEventListener("DOMContentLoaded", () => {
   const produtos = new Produtos();
 
-  produtos.scroll();
   produtos.mostrarProdutos();
   produtos.clicarnoProduto();
   produtos.clicarCarrinho();
   produtos.inicializarCarrinho();
+  produtos.scroll();
 });

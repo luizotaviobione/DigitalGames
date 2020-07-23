@@ -47,6 +47,14 @@ header {
   cursor: pointer;
 }
 
+.navbar-nav .nav-link {
+  color: white;
+  letter-spacing: var(--mainSpacing);
+}
+.navbar-nav .nav-link:hover {
+  color: #ccccb3;
+}
+
 /*caixa*/
 
 .caixa {
