@@ -251,7 +251,7 @@ class Produtos {
     elemento = `
           <div class="item-carrinho d-flex">
             <div class="img-item-carrinho">
-              <img src=${jogo.img} width="120" height="160" alt="" />
+              <img src=${jogo.img} width="120" height="160" class="diminuir-tamanho" alt="" />
             </div>
 
             <div class="info-item">
