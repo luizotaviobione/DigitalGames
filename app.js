@@ -15,32 +15,32 @@ const arrayJogos = [
   {
     nome: "Grand theft auto - Ps4",
     img: "images/jogos/gta.png",
-    preco: 19.95,
+    preco: 199.99,
   },
   {
-    nome: "Bully",
+    nome: "Bully - Ps4",
     img: "images/jogos/bully.png",
-    preco: 15.35,
+    preco: 150.3,
   },
   {
-    nome: "Star Wars Battlefront",
+    nome: "Star Wars Battlefront - Ps4",
     img: "images/jogos/battlefront.jpeg",
-    preco: 12.45,
+    preco: 120.5,
   },
   {
-    nome: "Uncharted The Lost Legacy",
+    nome: "Uncharted The Lost Legacy - Ps4",
     img: "images/jogos/uncharted.jpg",
-    preco: 12.43,
+    preco: 172.7,
   },
   {
-    nome: "Minecraft",
+    nome: "Minecraft - Ps4",
     img: "images/jogos/minecraft.jpg",
-    preco: 10.42,
+    preco: 130.0,
   },
   {
-    nome: "Crash Bandicoot",
+    nome: "Crash Bandicoot - Ps4",
     img: "images/jogos/crash.jpg",
-    preco: 13.22,
+    preco: 140.0,
   },
 ];
 
